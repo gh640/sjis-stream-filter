@@ -1,13 +1,13 @@
 <?php
 
-namespace gh640\SjisStreamFilter\Factory;
+namespace gh640\SjisStreamFilter\Manager;
 
 use gh640\SjisStreamFilter\Exception\Exception;
 
 /**
- * Factory class to generate filters.
+ * Manager class for stream filters.
  */
-class SjisFilterFactory {
+class SjisFilterManager {
 
   const FILTER_SJIS_TO_UTF8 = 'sjis_to_utf8';
   const FILTER_UTF8_TO_SJIS = 'utf8_to_sjis';
@@ -36,8 +36,12 @@ class SjisFilterFactory {
     }
 
     $filtername = $filtername ?: $this->getDefaultFilterName($type);
-    $result = stream_filter_register($filtername, $class);
 
+    if (in_array($filtername, stream_get_filters(), TRUE)) {
+      return $filtername;
+    }
+
+    $result = stream_filter_register($filtername, $class);
     if ($result) {
       return $filtername;
     }

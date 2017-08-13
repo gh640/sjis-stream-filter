@@ -1,17 +1,17 @@
 <?php
 
-namespace gh640\SjisStreamFilter\Factory;
+namespace gh640\SjisStreamFilter\Manager;
 
 use PHPUnit\Framework\TestCase;
 use gh640\SjisStreamFilter\Exception\Exception;
 
-class SjisFilterFactoryTest extends TestCase {
+class SjisFilterManagerTest extends TestCase {
 
   /**
    * Sets up the test environment.
    */
   public function setUp() {
-    $this->factory = new SjisFilterFactory();
+    $this->factory = new SjisFilterManager();
   }
 
   /**
@@ -20,13 +20,13 @@ class SjisFilterFactoryTest extends TestCase {
   public function testRegister() {
 
     // Tests the default name.
-    $result = $this->factory->register(SjisFilterFactory::FILTER_SJIS_TO_UTF8);
-    $this->assertEquals($result, SjisFilterFactory::FILTER_SJIS_TO_UTF8 . '_filter');
+    $result = $this->factory->register(SjisFilterManager::FILTER_SJIS_TO_UTF8);
+    $this->assertEquals(SjisFilterManager::FILTER_SJIS_TO_UTF8 . '_filter', $result);
 
     // Tests the custom name.
     $filtername = 'sample_filter';
-    $result = $this->factory->register(SjisFilterFactory::FILTER_UTF8_TO_SJIS, $filtername);
-    $this->assertEquals($result, $filtername);
+    $result = $this->factory->register(SjisFilterManager::FILTER_UTF8_TO_SJIS, $filtername);
+    $this->assertEquals($filtername, $result);
   }
 
   /**
@@ -46,8 +46,8 @@ class SjisFilterFactoryTest extends TestCase {
     $registered_filters = stream_get_filters();
 
     $expected_filters = [
-      SjisFilterFactory::FILTER_SJIS_TO_UTF8 . '_filter',
-      SjisFilterFactory::FILTER_UTF8_TO_SJIS . '_filter',
+      SjisFilterManager::FILTER_SJIS_TO_UTF8 . '_filter',
+      SjisFilterManager::FILTER_UTF8_TO_SJIS . '_filter',
     ];
 
     foreach ($expected_filters as $filter) {
