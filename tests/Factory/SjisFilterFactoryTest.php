@@ -1,0 +1,58 @@
+<?php
+
+namespace gh640\SjisStreamFilter\Factory;
+
+use PHPUnit\Framework\TestCase;
+use gh640\SjisStreamFilter\Exception\Exception;
+
+class SjisFilterFactoryTest extends TestCase {
+
+  /**
+   * Sets up the test environment.
+   */
+  public function setUp() {
+    $this->factory = new SjisFilterFactory();
+  }
+
+  /**
+   * Tests register() method.
+   */
+  public function testRegister() {
+
+    // Tests the default name.
+    $result = $this->factory->register(SjisFilterFactory::FILTER_SJIS_TO_UTF8);
+    $this->assertEquals($result, SjisFilterFactory::FILTER_SJIS_TO_UTF8 . '_filter');
+
+    // Tests the custom name.
+    $filtername = 'sample_filter';
+    $result = $this->factory->register(SjisFilterFactory::FILTER_UTF8_TO_SJIS, $filtername);
+    $this->assertEquals($result, $filtername);
+  }
+
+  /**
+   * Tests if register() method fails if the type name is not valid.
+   *
+   * @expectedException Exception
+   */
+  public function testRegisterFailure() {
+    $result = $this->factory->register('this_is_an_invalid_type');
+  }
+
+  /**
+   * Tests registerAll() method.
+   */
+  public function testRegisterAll() {
+    $this->factory->registerAll();
+    $registered_filters = stream_get_filters();
+
+    $expected_filters = [
+      SjisFilterFactory::FILTER_SJIS_TO_UTF8 . '_filter',
+      SjisFilterFactory::FILTER_UTF8_TO_SJIS . '_filter',
+    ];
+
+    foreach ($expected_filters as $filter) {
+      $this->assertContains($filter, $registered_filters);
+    }
+  }
+
+}
