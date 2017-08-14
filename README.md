@@ -9,7 +9,11 @@ There're 2 filters available in this package.
 
 ## Installation
 
-...
+You can install this package with `composer` command.
+
+```bash
+$ composer require gh640/sjis-stream-filter:1.0.0-alpha1
+```
 
 ## Usage
 
@@ -24,7 +28,7 @@ Also, there's a manager class `SjisFilterManager` which allow to use the filters
 ```php
 <?php
 
-namespace gh640\SjisStreamFilter\Manager\SjisFilterManager;
+use gh640\SjisStreamFilter\Manager\SjisFilterManager;
 
 // Register the sjis-to-utf8 filter.
 $filter_manager = new SjisFilterManager();
