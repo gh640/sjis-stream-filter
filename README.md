@@ -1,6 +1,6 @@
 # `gh640/sjis-stream-filter`
 
-Provides some PHP stream filters for Shift-JIS encoding.
+Provides 2 simple PHP stream filters for Shift-JIS encoding.
 
 There're 2 filters available in this package.
 
@@ -12,7 +12,7 @@ There're 2 filters available in this package.
 You can install this package with `composer` command.
 
 ```bash
-$ composer require gh640/sjis-stream-filter:1.0.0-alpha1
+$ composer require gh640/sjis-stream-filter:1.0.0-alpha2
 ```
 
 ## Usage
@@ -25,12 +25,12 @@ The following stream filter classes can be used directly with `stream_filter_reg
 ```php
 <?php
 
-// Register the utf8-to-sjis filter.
-$filtername = 'utf8_to_sjis_filter';
+// Register the sjis-to-utf8 filter.
+$filtername = 'sjis_to_utf8_filter';
 stream_filter_register($filtername, '\gh640\SjisStreamFilter\Filter\SjisToUtf8Filter');
 
 // Use the filter when reading a sjis-encoded file.
-$fp = fopen('a-file-encoded-with-sjis.txt');
+$fp = fopen('a-file-encoded-with-sjis.txt', 'r');
 stream_filter_append($fp, $filtername);
 while (!feof($fp)) {
   $line = fgets($fp);
@@ -54,7 +54,7 @@ $filter_manager = new SjisFilterManager();
 $filtername = $filter_manager->register(SjisFilterManager::FILTER_SJIS_TO_UTF8);
 
 // Read a file encoded with sjis.
-$fp = fopen('a-file-encoded-with-sjis.txt');
+$fp = fopen('a-file-encoded-with-sjis.txt', 'r');
 stream_filter_append($fp, $filtername);
 while (!feof($fp)) {
   $line = fgets($fp);
