@@ -20,11 +20,6 @@ class SjisFilterManager {
    * @param string|null $filtername
    *   The filter name. This fallbacks to the return value of
    *   this->getDefaultFilterName() if not specified.
-   *
-   * @return string|bool
-   *   The filter name which has been registerd.
-   *   True if the filter name is already registered, and false if the
-   *   registration failed.
    */
   public function register($type, $filtername = NULL) {
     switch ($type) {
@@ -43,7 +38,7 @@ class SjisFilterManager {
     $filtername = $filtername ?: $this->getDefaultFilterName($type);
 
     if (in_array($filtername, stream_get_filters(), TRUE)) {
-      return true;
+      return $filtername;
     }
 
     $result = stream_filter_register($filtername, $class);
