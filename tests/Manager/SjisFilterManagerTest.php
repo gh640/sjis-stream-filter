@@ -21,7 +21,13 @@ class SjisFilterManagerTest extends TestCase {
 
     // Tests the default name.
     $result = $this->factory->register(SjisFilterManager::FILTER_SJIS_TO_UTF8);
-    $this->assertEquals(SjisFilterManager::FILTER_SJIS_TO_UTF8 . '_filter', $result);
+    // If the testRegisterAll() is run prior to this case, the filter is
+    // already registered and the $result may be true.
+    $expected = [
+      SjisFilterManager::FILTER_SJIS_TO_UTF8 . '_filter',
+      true,
+    ];
+    $this->assertContains($result, $expected);
 
     // Tests the custom name.
     $filtername = 'sample_filter';
