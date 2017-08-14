@@ -20,6 +20,9 @@ class SjisFilterManager {
    * @param string|null $filtername
    *   The filter name. This fallbacks to the return value of
    *   this->getDefaultFilterName() if not specified.
+   *
+   * @return string|false
+   *   The filter name registered. Or false if the registration failed.
    */
   public function register($type, $filtername = NULL) {
     switch ($type) {
